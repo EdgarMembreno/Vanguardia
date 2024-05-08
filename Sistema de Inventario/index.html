@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Random User Profile</title>
+</head>
+<body>
+    <h1>Random User</h1>
+    <button onclick="fetchRandomUser()">Fetch User</button>
+    <div id="user-profile">
+        <img id="user-image" src="" alt="User Image">
+        <p id="user-name"></p>
+        <p id="user-email"></p>
+    </div>
+    <script>
+        function fetchRandomUser() {
+            fetch('/randomuser')
+                .then(response => response.json())
+                .then(data => {
+                    const userData = data.results[0];
+                    document.getElementById('user-image').src = userData.picture.large;
+                    document.getElementById('user-name').textContent = `${userData.name.title} ${userData.name.first} ${userData.name.last}`;
+                    document.getElementById('user-email').textContent = userData.email;
+                })
+                .catch(error => console.error('Error fetching data:', error));
+        }
+    </script>
+</body>
+</html>
